@@ -1,4 +1,14 @@
 <?php
+//echo "<pre>";
+//print_r($messages);die();
+?>
+
+
+
+
+
+
+<?php
 use \yii\widgets\ActiveForm;
 use \yii\helpers\Html; //юзаю неймспейс виджета
 /* @var $this yii\web\View */
@@ -8,8 +18,24 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
     <div class="list-group">
-        <a href="#" class="list-group-item">Second item</a>
-        <a href="#" class="list-group-item">Third item</a>
+
+
+
+        <? foreach ($messages as $message):?>
+        <a href="#" class="list-group-item">
+
+            <?= $message['messages']; ?>
+
+            <span class="btn pull-right">at <?= date("d.m.Y H:i:s", $message['created_at']); ?></span>
+
+<!--            .created by --><?//= $message['user_id']; ?>
+        </a>
+        <? endforeach; ?>
+
+
+
+
+
     </div>
 
     <!--    начало хтмл-виджета-->

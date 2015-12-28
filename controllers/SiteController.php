@@ -51,34 +51,34 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        $url = Yii::getAlias('@app') . '/web/data/data.txt';
+
+        $messages = json_decode(file_get_contents($url), true);
+
         $model = new Message();//дя валидации формы
+
         return $this->render('index', [ //передаю во вьюху новый объкт massages
-            'model' => $model
+            'model' => $model,
+            'messages' => $messages,
         ]);
+
     }
 
     public function actionSaveMasseges()
     {
-
-//        $a = [
-//            0 => 1
-//        ];
-//        $a[] = 2;
-//        var_dump($a);
-
-
         $message = $_POST['Message']['message'];
 
         $url = Yii::getAlias('@app') . '/web/data/data.txt';
-
+        $time = time();
+        //date('U')
+        //time();
         $arr = [
             [
                 'user_id' => '1',
                 'messages' => $message,
+                'created_at' => $time,
             ],
-
         ];
-
 
         $content = file_get_contents($url);
 
@@ -90,78 +90,13 @@ class SiteController extends Controller
             $arr[] = [
                 'user_id' => '1',
                 'messages' => $message,
+                'created_at' => $time,
             ];
             file_put_contents($url, json_encode($arr));
 
         }
+        return $this->redirect('/site/index');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        {
-//            [
-//                "user_id" : "1",
-//                "messages" : "ffgcfgcycvygvy",
-//                "created_at" : "12312312313131"
-//            ],
-//            [
-//                "user_id" : "1",
-//                "messages" : "hjbhhjb",
-//                "created_at" : "34"
-//            ],
-//        }
-
-
-
-
-//        $arr = [
-//            [
-//                'user_id' => '1',
-//                'messages' => 'ffgcfgcycvygvy',
-//            ],
-//            [
-//                'user_id' => '21',
-//                'messages' => 'fgdg',
-//            ],
-//        ];
-
-
-
-//        echo '<pre>';
-//        var_dump(json_encode($arr));die();
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        $str = '[{"user_id":"1","messages":"ffgcfgcycvygvy"},{"user_id":"21","messages":"fgdg"}]';
-//
-//        var_dump( json_decode($str, true) );die();
-
-        // записывать в текстовый файл в формате json
     }
 
     public function actionLogin()
@@ -204,3 +139,60 @@ class SiteController extends Controller
         return $this->render('about');
     }
 }
+
+
+
+
+
+
+
+
+
+
+//        $a = [
+//            0 => 1
+//        ];
+//        $a[] = 2;
+//        var_dump($a);
+
+
+
+//        {
+//            [
+//                "user_id" : "1",
+//                "messages" : "ffgcfgcycvygvy",
+//                "created_at" : "12312312313131"
+//            ],
+//            [
+//                "user_id" : "1",
+//                "messages" : "hjbhhjb",
+//                "created_at" : "34"
+//            ],
+//        }
+
+
+
+
+//        $arr = [
+//            [
+//                'user_id' => '1',
+//                'messages' => 'ffgcfgcycvygvy',
+//            ],
+//            [
+//                'user_id' => '21',
+//                'messages' => 'fgdg',
+//            ],
+//        ];
+
+
+
+
+
+//        echo '<pre>';
+//        var_dump(json_encode($arr));die();
+
+//        $str = '[{"user_id":"1","messages":"ffgcfgcycvygvy"},{"user_id":"21","messages":"fgdg"}]';
+//
+//        var_dump( json_decode($str, true) );die();
+
+// записывать в текстовый файл в формате json
